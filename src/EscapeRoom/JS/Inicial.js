@@ -33,8 +33,13 @@ $(document).ready(function() {
             }
         });
     });
-    $("#login_button").click(function () {
+    $.get( BASE_URI.concat("/user/login"), function( data ) {
+        $.each(data, function (index, element) {
+           console.log(data);
+        });
+    }, "json" );
 
+    $("#login_button").click(function () {
         var username = $("#username").val();
         console.log(username);
         var password = $("#password").val();
@@ -42,14 +47,31 @@ $(document).ready(function() {
         console.log("Estoy en login script");
         //Create the object that we want to pass, which is user
         var user = {
-            "username": username,
-            "password": password,
+            "username": "mario",
+            "password": "mario",
         };
         console.log(user);
+        console.log(JSON.stringify(user));
+        $.post( BASE_URI.concat("/user/login"),JSON.stringify(user),function( data, status ) {
+               console.log(status);
+            });
+
+       /* var username = $("#username").val();
+        console.log(username);
+        var password = $("#password").val();
+        console.log(password);
+        console.log("Estoy en login script");
+        //Create the object that we want to pass, which is user
+        var user = {
+            "username": "mario",
+            "password": "mario",
+        };
+        console.log(user);
+        console.log(JSON.stringify(user));
         $.ajax({
             header: {'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'},
             type: 'POST',
-            url: BASE_URI.concat("/user"),
+            url: BASE_URI.concat("/user/login"),
             data: JSON.stringify(user),
             dataType: 'json',
             success: function (data) {
@@ -65,7 +87,7 @@ $(document).ready(function() {
                     alert("User doesn't exist. Your username or password may be wrong");
                 }
             }
-        });
+        });*/
 
     })
 });
